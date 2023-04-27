@@ -9,6 +9,10 @@ const btnRight = document.querySelector('#right');
 let canvasSize;
 let elementsSize;
 
+const playerPosition = {
+  x: undefined,
+  y: undefined,
+};
 //EVENTS
 //set size of canvas
 window.addEventListener('load', setCanvasSize);
@@ -19,53 +23,55 @@ window.addEventListener('resize', setCanvasSize);
 // canvas rendering
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.83;
+    canvasSize = window.innerWidth * 0.8;
   } else {
-    canvasSize = window.innerHeight * 0.83;
+    canvasSize = window.innerHeight * 0.8;
   }
 
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
 
-  elementsSize = canvasSize / 10 - 3;
+  elementsSize = canvasSize / 10 - 1;
   startGame();
 }
 
 function startGame() {
   // console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize - 10 + 'px Verdana';
+  game.font = elementsSize - 7 + 'px Verdana';
+  game.font = elementsSize - 7 + 'px Verdana';
   game.textAlign = 'end';
-  game.alignItems = 'flex-end';
 
   const map = maps[0];
-
   const mapRows = map.trim().split('\n'); //maps[0]= clean spaces with .trim and create new one with start and end of each element when there is a line break
   const mapRowCols = mapRows.map((row) => row.trim().split('')); //columnas de cada fila de nuestro mapa
+  // console.log(map, mapRows, mapRowCols);
 
-  console.log(map, mapRows, mapRowCols);
+  game.clearRect(0, 0, canvasSize, canvasSize);
 
   mapRowCols.forEach((row, rowI) => {
     row.forEach((col, colI) => {
       const emoji = emojis[col];
       const posX = elementsSize * (colI + 1);
       const posY = elementsSize * (rowI + 1);
+      if (col == 'O') {
+        if (!playerPosition.x && !playerPosition.y) {
+          //si ninguno de estos elementos tiene algo dentro
+          playerPosition.x = posX;
+          playerPosition.y = posY;
+          console.log({ playerPosition });
+        }
+      }
       game.fillText(emoji, posX, posY);
     });
   });
-
-  // for (let row = 1; row <= 10; row++) {
-  //   //eje X
-  //   for (let col = 1; col <= 10; col++) {
-  //     //eje Y
-  //     game.fillText(
-  //       emojis[mapRowCols[row - 1][col - 1]],
-  //       elementsSize * col,
-  //       elementsSize * row
-  //     );
-  //   }
-  // }
+  movePlayer();
 }
+
+function movePlayer() {
+  game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
+}
+
 window.addEventListener('keydown', moveByKeys);
 btnUp.addEventListener('click', moveUp);
 btnDown.addEventListener('click', moveDown);
@@ -80,13 +86,21 @@ function moveByKeys(event) {
 }
 function moveUp() {
   console.log('arriba');
+  playerPosition.y -= elementsSize;
+  startGame();
 }
 function moveDown() {
   console.log('abajo');
+  playerPosition.y += elementsSize;
+  startGame();
 }
 function moveRight() {
   console.log('derecha');
+  playerPosition.x += elementsSize;
+  startGame();
 }
 function moveLeft() {
   console.log('izquierda');
+  playerPosition.x -= elementsSize;
+  startGame();
 }

@@ -5,9 +5,9 @@
 
 const emojis = {
   '-': ' ',
-  O: '🧠',
+  O: '🪦',
   X: '🧱',
-  I: '🪦',
+  I: '🧠',
   PLAYER: '🧟‍♀️',
   BOMB_COLLISION: '💥',
   GAME_OVER: '👎',
