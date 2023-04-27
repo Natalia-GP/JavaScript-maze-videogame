@@ -23,9 +23,9 @@ window.addEventListener('resize', setCanvasSize);
 // canvas rendering
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.8;
+    canvasSize = window.innerWidth * 1;
   } else {
-    canvasSize = window.innerHeight * 0.8;
+    canvasSize = window.innerHeight * 1;
   }
 
   canvas.setAttribute('width', canvasSize);
@@ -38,7 +38,6 @@ function setCanvasSize() {
 function startGame() {
   // console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize - 7 + 'px Verdana';
   game.font = elementsSize - 7 + 'px Verdana';
   game.textAlign = 'end';
 
@@ -84,23 +83,37 @@ function moveByKeys(event) {
   else if (event.key == 'ArrowRight') moveRight();
   else if (event.key == 'ArrowDown') moveDown();
 }
+
 function moveUp() {
   console.log('arriba');
-  playerPosition.y -= elementsSize;
-  startGame();
-}
-function moveDown() {
-  console.log('abajo');
-  playerPosition.y += elementsSize;
-  startGame();
-}
-function moveRight() {
-  console.log('derecha');
-  playerPosition.x += elementsSize;
-  startGame();
+  if (playerPosition.y - elementsSize < elementsSize) {
+  } else {
+    playerPosition.y -= elementsSize;
+    startGame();
+  }
 }
 function moveLeft() {
   console.log('izquierda');
-  playerPosition.x -= elementsSize;
-  startGame();
+  if (playerPosition.x - elementsSize < elementsSize) {
+    console.log('OUT');
+  } else {
+    playerPosition.x -= elementsSize;
+    startGame();
+  }
+}
+function moveRight() {
+  console.log('derecha');
+  if (playerPosition.x + elementsSize > canvasSize) {
+  } else {
+    playerPosition.x += elementsSize;
+    startGame();
+  }
+}
+function moveDown() {
+  console.log('abajo');
+  if (playerPosition.y + elementsSize > canvasSize) {
+  } else {
+    playerPosition.y += elementsSize;
+    startGame();
+  }
 }
