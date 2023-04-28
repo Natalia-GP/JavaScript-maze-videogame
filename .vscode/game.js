@@ -53,13 +53,9 @@ function startGame() {
       const emoji = emojis[col];
       const posX = elementsSize * (colI + 1);
       const posY = elementsSize * (rowI + 1);
-      if (col == 'O') {
-        if (!playerPosition.x && !playerPosition.y) {
-          //si ninguno de estos elementos tiene algo dentro
-          playerPosition.x = posX;
-          playerPosition.y = posY;
-          console.log({ playerPosition });
-        }
+      if (col == 'O' && !playerPosition.x && !playerPosition.y) {
+        playerPosition.x = posX / elementsSize;
+        playerPosition.y = posY / elementsSize;
       }
       game.fillText(emoji, posX, posY);
     });
@@ -68,7 +64,11 @@ function startGame() {
 }
 
 function movePlayer() {
-  game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
+  game.fillText(
+    emojis['PLAYER'],
+    playerPosition.x * elementsSize,
+    playerPosition.y * elementsSize
+  );
 }
 
 window.addEventListener('keydown', moveByKeys);
@@ -85,35 +85,30 @@ function moveByKeys(event) {
 }
 
 function moveUp() {
-  console.log('arriba');
-  if (playerPosition.y - elementsSize < elementsSize) {
-  } else {
-    playerPosition.y -= elementsSize;
-    startGame();
+  console.log('Arriba');
+  if (playerPosition.y > 1) {
+    playerPosition.y -= 1;
   }
+  startGame();
 }
 function moveLeft() {
-  console.log('izquierda');
-  if (playerPosition.x - elementsSize < elementsSize) {
-    console.log('OUT');
-  } else {
-    playerPosition.x -= elementsSize;
-    startGame();
+  console.log('Izquierda');
+  if (playerPosition.x > 1) {
+    playerPosition.x -= 1;
   }
+  startGame();
 }
 function moveRight() {
-  console.log('derecha');
-  if (playerPosition.x + elementsSize > canvasSize) {
-  } else {
-    playerPosition.x += elementsSize;
-    startGame();
+  console.log('Derecha');
+  if (playerPosition.x < 10) {
+    playerPosition.x += 1;
   }
+  startGame();
 }
 function moveDown() {
-  console.log('abajo');
-  if (playerPosition.y + elementsSize > canvasSize) {
-  } else {
-    playerPosition.y += elementsSize;
-    startGame();
+  console.log('Abajo');
+  if (playerPosition.y < 10) {
+    playerPosition.y += 1;
   }
+  startGame();
 }
