@@ -9,6 +9,7 @@ const btnRight = document.querySelector('#right');
 let canvasSize;
 let elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
   x: undefined,
@@ -91,20 +92,18 @@ function startGame() {
 }
 
 function movePlayer() {
-  const brainCollisionX =
-    playerPosition.x.toFixed(3) == brainPosition.x.toFixed(3);
-  const brainCollisionY =
-    playerPosition.y.toFixed(3) == brainPosition.y.toFixed(3);
+  const brainCollisionX = playerPosition.x === brainPosition.x / elementsSize;
+  const brainCollisionY = playerPosition.y === brainPosition.y / elementsSize;
   const brainCollision = brainCollisionX && brainCollisionY;
 
   if (brainCollision) {
-    levelWin();
+    console.log('subiste');
   }
 
   const wallCollision = wallPositions.find((wall) => {
-    const wallCollisionX = wall.x.toFixed(3) == playerPosition.x.toFixed(3);
-    const wallCollisionY = wall.y.toFixed(3) == playerPosition.y.toFixed(3);
-    return wallCollisionX && wallCollisionY;
+    const wallCollosionX = wall.x / elementsSize === playerPosition.x;
+    const wallCollionsY = wall.y / elementsSize === playerPosition.y;
+    return wallCollosionX && wallCollionsY;
   });
 
   if (wallCollision) {
@@ -116,6 +115,9 @@ function movePlayer() {
     playerPosition.x * elementsSize,
     playerPosition.y * elementsSize
   );
+  if (brainCollision) {
+    levelWin();
+  }
 }
 
 function levelWin() {
