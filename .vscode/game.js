@@ -4,6 +4,7 @@ const btnUp = document.querySelector('#up');
 const btnDown = document.querySelector('#down');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
+const spanLives = document.querySelector('#lives');
 
 //VARIABLES
 let canvasSize;
@@ -59,6 +60,7 @@ function startGame() {
   const mapRows = map.trim().split('\n'); //maps[0]= clean spaces with .trim and create new one with start and end of each element when there is a line break
   const mapRowCols = mapRows.map((row) => row.trim().split('')); //columnas de cada fila de nuestro mapa
   console.log(map, mapRows, mapRowCols);
+  showLives();
 
   wallPositions = []; //CLEAN
   game.clearRect(0, 0, canvasSize, canvasSize); //clean
@@ -96,10 +98,6 @@ function movePlayer() {
   const brainCollisionY = playerPosition.y === brainPosition.y / elementsSize;
   const brainCollision = brainCollisionX && brainCollisionY;
 
-  if (brainCollision) {
-    console.log('subiste');
-  }
-
   const wallCollision = wallPositions.find((wall) => {
     const wallCollosionX = wall.x / elementsSize === playerPosition.x;
     const wallCollionsY = wall.y / elementsSize === playerPosition.y;
@@ -128,6 +126,13 @@ function levelWin() {
 
 function levelFail() {
   console.log('fallaste');
+  lives--;
+
+  if (lives <= 0) {
+    level = 0;
+    lives = 3;
+  }
+
   playerPosition.x = undefined;
   playerPosition.y = undefined;
   startGame();
@@ -135,6 +140,11 @@ function levelFail() {
 
 function gameWin() {
   console.log('Terminaste');
+}
+function showLives() {
+  const heartsArray = Array(lives).fill(emojis['HEART']);
+  spanLives.innerHTML = '';
+  heartsArray.forEach((heart) => spanLives.append(heart));
 }
 window.addEventListener('keydown', moveByKeys);
 btnUp.addEventListener('click', moveUp);
