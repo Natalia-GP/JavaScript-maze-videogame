@@ -5,12 +5,18 @@ const btnDown = document.querySelector('#down');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const spanLives = document.querySelector('#lives');
+const spanTime = document.querySelector('#time');
 
 //VARIABLES
 let canvasSize;
 let elementsSize;
+
 let level = 0;
 let lives = 3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
   x: undefined,
@@ -33,15 +39,15 @@ window.addEventListener('resize', setCanvasSize);
 // canvas rendering
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 1;
+    canvasSize = window.innerWidth * 0.8;
   } else {
-    canvasSize = window.innerHeight * 1;
+    canvasSize = window.innerHeight * 0.8;
   }
 
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
 
-  elementsSize = canvasSize / 10 - 1;
+  elementsSize = canvasSize / 10;
   startGame();
 }
 
@@ -57,6 +63,12 @@ function startGame() {
     gameWin();
     return;
   }
+
+  if (!timeStart) {
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime, 100);
+  }
+
   const mapRows = map.trim().split('\n'); //maps[0]= clean spaces with .trim and create new one with start and end of each element when there is a line break
   const mapRowCols = mapRows.map((row) => row.trim().split('')); //columnas de cada fila de nuestro mapa
   console.log(map, mapRows, mapRowCols);
@@ -131,6 +143,7 @@ function levelFail() {
   if (lives <= 0) {
     level = 0;
     lives = 3;
+    timeStart = undefined;
   }
 
   playerPosition.x = undefined;
@@ -140,12 +153,17 @@ function levelFail() {
 
 function gameWin() {
   console.log('Terminaste');
+  clearInterval(timeInterval);
 }
 function showLives() {
   const heartsArray = Array(lives).fill(emojis['HEART']);
   spanLives.innerHTML = '';
   heartsArray.forEach((heart) => spanLives.append(heart));
 }
+function showTime() {
+  spanTime.innerHTML = ((Date.now() - timeStart) / 1000).toFixed(1);
+}
+
 window.addEventListener('keydown', moveByKeys);
 btnUp.addEventListener('click', moveUp);
 btnDown.addEventListener('click', moveDown);
