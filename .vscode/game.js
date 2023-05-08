@@ -6,6 +6,8 @@ const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
+const spanRecord = document.querySelector('#record');
+const result = document.querySelector('#result');
 
 //VARIABLES
 let canvasSize;
@@ -47,7 +49,7 @@ function setCanvasSize() {
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
 
-  elementsSize = canvasSize / 10;
+  elementsSize = canvasSize / 10 - 2;
   startGame();
 }
 
@@ -67,11 +69,12 @@ function startGame() {
   if (!timeStart) {
     timeStart = Date.now();
     timeInterval = setInterval(showTime, 100);
+    showRecord();
   }
 
   const mapRows = map.trim().split('\n'); //maps[0]= clean spaces with .trim and create new one with start and end of each element when there is a line break
   const mapRowCols = mapRows.map((row) => row.trim().split('')); //columnas de cada fila de nuestro mapa
-  console.log(map, mapRows, mapRowCols);
+
   showLives();
 
   wallPositions = []; //CLEAN
@@ -152,8 +155,23 @@ function levelFail() {
 }
 
 function gameWin() {
-  console.log('Terminaste');
-  clearInterval(timeInterval);
+  //   console.log('Terminaste');
+  //   clearInterval(timeInterval);
+  //   //RECORD
+  //   const recordTime = localStorage.getItem('record_time');
+  //   const playerTime = ((Date.now() - timeStart) / 1000).toFixed(1);
+  //   if (recordTime) {
+  //     if (recordTime >= playerTime) {
+  //       localStorage.setItem('record_time', playerTime);
+  //       result.innerHTML = '¡SUPERASTE EL RECORD!';
+  //     } else {
+  //       result.innerHTML = 'No superaste el record ☠️';
+  //     }
+  //   } else {
+  //     localStorage.setItem('record_time', playerTime);
+  //     result.innerHTML = '¡TERMINASTE!¿ERES CAPAZ DE SUPERAR TU TIEMPO?';
+  //   }
+  //   console.log({ recordTime, playerTime });
 }
 function showLives() {
   const heartsArray = Array(lives).fill(emojis['HEART']);
@@ -163,7 +181,9 @@ function showLives() {
 function showTime() {
   spanTime.innerHTML = ((Date.now() - timeStart) / 1000).toFixed(1);
 }
-
+function showRecord() {
+  spanRecord.innerHTML = localStorage.getItem('record_time');
+}
 window.addEventListener('keydown', moveByKeys);
 btnUp.addEventListener('click', moveUp);
 btnDown.addEventListener('click', moveDown);
