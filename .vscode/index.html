@@ -8,13 +8,24 @@
     <title>Race Maze</title>
   </head>
   <body>
-    <div class="game-container">
+    <header class="header">
+      <h1 class="title">Zombie Maze</h1>
+    </header>
+    <main class="main">
       <canvas id="game"></canvas>
       <div class="btns">
-        <button id="up">Arriba</button>
-        <button id="left">Izquierda</button>
-        <button id="right">Derecha</button>
-        <button id="down">Abajo</button>
+        <button id="up">
+          <span class="iconify" data-icon="solar:map-arrow-up-bold"></span>
+        </button>
+        <button id="left">
+          <span class="iconify" data-icon="solar:map-arrow-left-bold"></span>
+        </button>
+        <button id="right">
+          <span class="iconify" data-icon="solar:map-arrow-right-bold"></span>
+        </button>
+        <button id="down">
+          <span class="iconify" data-icon="solar:map-arrow-down-bold"></span>
+        </button>
       </div>
       <div class="messages">
         <p>Lives: <span id="lives"></span></p>
@@ -22,14 +33,12 @@
         <p>Record:🏆<span id="record"></span></p>
         <p id="result"></p>
       </div>
-      <section class="win-container inactive">
-        <h2>¡Felicidades! Terminaste el juego</h2>
-        <span>🏆</span>
-        <p class="newrecord"></p>
-        <a href="/index.html"><input type="button" value="Volver a Jugar" /></a>
-      </section>
-    </div>
+    </main>
+    <footer class="footer">
+      <span> Natalia Gómez Pérez © 2023 </span>
+    </footer>
     <script src="./maps.js"></script>
     <script src="./game.js"></script>
+    <script src="//code.iconify.design/1/1.0.6/iconify.min.js"></script>
   </body>
 </html>

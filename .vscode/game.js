@@ -41,22 +41,22 @@ window.addEventListener('resize', setCanvasSize);
 // canvas rendering
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.8;
+    canvasSize = window.innerWidth * 0.6;
   } else {
-    canvasSize = window.innerHeight * 0.8;
+    canvasSize = window.innerHeight * 0.6;
   }
 
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
 
-  elementsSize = canvasSize / 10 - 2;
+  elementsSize = canvasSize / 10 - 1;
   startGame();
 }
 
 function startGame() {
   console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize - 7 + 'px Verdana';
+  game.font = elementsSize - 5 + 'px Verdana';
   game.textAlign = 'end';
 
   const map = maps[level];
@@ -68,7 +68,7 @@ function startGame() {
 
   if (!timeStart) {
     timeStart = Date.now();
-    timeInterval = setInterval(showTime, 100);
+    timeInterval = setInterval(showTime, 300);
     showRecord();
   }
 
@@ -119,17 +119,32 @@ function movePlayer() {
     return wallCollosionX && wallCollionsY;
   });
 
-  if (wallCollision) {
-    levelFail();
-  }
+  // if (wallCollision) {
+  //   levelFail();
+  // }
 
-  game.fillText(
-    emojis['PLAYER'],
-    playerPosition.x * elementsSize,
-    playerPosition.y * elementsSize
-  );
+  // game.fillText(
+  //   emojis['PLAYER'],
+  //   playerPosition.x * elementsSize,
+  //   playerPosition.y * elementsSize
+  // );
   if (brainCollision) {
     levelWin();
+  } else if (wallCollision) {
+    game.fillText(
+      emojis['BOMB_COLLISION'],
+      playerPosition.x * elementsSize,
+      playerPosition.y * elementsSize
+    );
+    setTimeout(() => {
+      levelFail();
+    }, 100);
+  } else {
+    game.fillText(
+      emojis['PLAYER'],
+      playerPosition.x * elementsSize,
+      playerPosition.y * elementsSize
+    );
   }
 }
 
@@ -155,23 +170,23 @@ function levelFail() {
 }
 
 function gameWin() {
-  //   console.log('Terminaste');
-  //   clearInterval(timeInterval);
-  //   //RECORD
-  //   const recordTime = localStorage.getItem('record_time');
-  //   const playerTime = ((Date.now() - timeStart) / 1000).toFixed(1);
-  //   if (recordTime) {
-  //     if (recordTime >= playerTime) {
-  //       localStorage.setItem('record_time', playerTime);
-  //       result.innerHTML = '¡SUPERASTE EL RECORD!';
-  //     } else {
-  //       result.innerHTML = 'No superaste el record ☠️';
-  //     }
-  //   } else {
-  //     localStorage.setItem('record_time', playerTime);
-  //     result.innerHTML = '¡TERMINASTE!¿ERES CAPAZ DE SUPERAR TU TIEMPO?';
-  //   }
-  //   console.log({ recordTime, playerTime });
+  console.log('Terminaste');
+  clearInterval(timeInterval);
+  //RECORD
+  const recordTime = localStorage.getItem('record_time');
+  const playerTime = (Date.now() - timeStart) / 1000;
+  if (recordTime) {
+    if (recordTime >= playerTime) {
+      localStorage.setItem('record_time', playerTime);
+      result.innerHTML = '¡SUPERASTE EL RECORD!';
+    } else {
+      result.innerHTML = 'No superaste el record ☠️';
+    }
+  } else {
+    localStorage.setItem('record_time', playerTime);
+    result.innerHTML = '¡TERMINASTE!¿ERES CAPAZ DE SUPERAR TU TIEMPO?';
+  }
+  console.log({ recordTime, playerTime });
 }
 function showLives() {
   const heartsArray = Array(lives).fill(emojis['HEART']);
