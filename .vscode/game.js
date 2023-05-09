@@ -41,20 +41,7 @@ window.addEventListener('resize', setCanvasSize);
 function fixNumber(n) {
   return Number(n.toFixed(0));
 }
-// canvas rendering
-// function setCanvasSize() {
-//   if (window.innerHeight > window.innerWidth) {
-//     canvasSize = window.innerWidth * 0.6;
-//   } else {
-//     canvasSize = window.innerHeight * 0.6;
-//   }
 
-//   canvas.setAttribute('width', canvasSize);
-//   canvas.setAttribute('height', canvasSize);
-
-//   elementsSize = canvasSize / 10 - 1;
-//   startGame();
-// }
 function setCanvasSize() {
   canvasSize = Math.min(window.innerHeight, window.innerWidth) * 0.6;
 
