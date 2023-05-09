@@ -42,8 +42,6 @@ canvas {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 0 auto;
-  width: 100%;
 }
 
 button {
@@ -66,6 +64,7 @@ button:not(:last-child) {
   align-items: center;
   margin: 0 auto;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 23px;
 }
 
 @media (max-width: 440px) {
@@ -86,9 +85,4 @@ button:not(:last-child) {
   color: white;
   font-size: 15px;
   margin: 10px 0px 10px 0px;
-}
-p {
-  display: flex;
-  justify-content: space-between;
-  height: 30px;
 }
