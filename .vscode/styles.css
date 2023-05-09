@@ -3,25 +3,35 @@
   margin: 0;
   padding: 0;
 }
-/* html {
-  font-size: 80%;
-} */
+
+@font-face {
+  font-family: fontTitle;
+  src: url(./fonts/Scary\ Zombie.ttf);
+}
 body {
-  background-color: rgb(0, 130, 82);
-  color: #fff;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: 0;
-  padding: 0;
+  background-image: url(./images/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-y: hidden;
+}
+
+.title {
+  font-family: fontTitle;
+  text-align: center;
+  font-size: 50px;
+  color: #feef34;
+  display: block;
+  letter-spacing: 1px;
+  margin: 10px 0px 20px 0px;
+  text-shadow: black 5px 0 10px;
 }
 
 .main {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  height: 90vh;
+  max-height: fit-content;
 }
-
 canvas {
   border: 3px solid #020100;
   border-radius: 8px;
@@ -41,9 +51,10 @@ button {
   border-radius: 8px;
   border-color: #ff6600;
   font-family: inherit;
-  margin: 0;
+  margin: 50px 0px 30px 0;
   padding: 5px 40px;
   width: 100px;
+  text-align: center;
 }
 button:not(:last-child) {
   margin-right: 10px;
@@ -57,12 +68,6 @@ button:not(:last-child) {
   margin: 0 auto;
 }
 
-p {
-  display: block;
-  margin: 0;
-  width: 100%;
-}
-
 @media (max-width: 440px) {
   button {
     margin-top: 5px;
@@ -72,4 +77,13 @@ p {
     margin-left: 100%;
     margin-right: 100%;
   }
+  .btn {
+    margin-top: 40px;
+  }
+}
+.footer {
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  margin: 10px 0px 10px 0px;
 }

@@ -8,6 +8,7 @@ const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
 const spanRecord = document.querySelector('#record');
 const result = document.querySelector('#result');
+const btnReset = document.querySelector('#reset');
 
 //VARIABLES
 let canvasSize;
@@ -37,26 +38,43 @@ window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
 //FUNCTIONS
-
+function fixNumber(n) {
+  return Number(n.toFixed(0));
+}
 // canvas rendering
+// function setCanvasSize() {
+//   if (window.innerHeight > window.innerWidth) {
+//     canvasSize = window.innerWidth * 0.6;
+//   } else {
+//     canvasSize = window.innerHeight * 0.6;
+//   }
+
+//   canvas.setAttribute('width', canvasSize);
+//   canvas.setAttribute('height', canvasSize);
+
+//   elementsSize = canvasSize / 10 - 1;
+//   startGame();
+// }
 function setCanvasSize() {
-  if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.6;
-  } else {
-    canvasSize = window.innerHeight * 0.6;
-  }
+  canvasSize = Math.min(window.innerHeight, window.innerWidth) * 0.6;
+
+  canvasSize = fixNumber(canvasSize);
 
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
 
-  elementsSize = canvasSize / 10 - 1;
+  elementsSize = fixNumber(canvasSize / 10 - 1.5);
+
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
+
   startGame();
 }
 
 function startGame() {
   console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize - 5 + 'px Verdana';
+  game.font = elementsSize - 4 + 'px Verdana';
   game.textAlign = 'end';
 
   const map = maps[level];
@@ -188,6 +206,9 @@ function gameWin() {
   }
   console.log({ recordTime, playerTime });
 }
+function resetGame() {
+  location.reload();
+}
 function showLives() {
   const heartsArray = Array(lives).fill(emojis['HEART']);
   spanLives.innerHTML = '';
@@ -199,11 +220,13 @@ function showTime() {
 function showRecord() {
   spanRecord.innerHTML = localStorage.getItem('record_time');
 }
+
 window.addEventListener('keydown', moveByKeys);
 btnUp.addEventListener('click', moveUp);
 btnDown.addEventListener('click', moveDown);
 btnRight.addEventListener('click', moveRight);
 btnLeft.addEventListener('click', moveLeft);
+btnReset.addEventListener('click', resetGame);
 
 //MOVE PLAYER
 
